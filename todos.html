@@ -5,17 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
     <title>Todos</title>
 </head>
 
 <body>
-    <select name="user-dropdown" id="user-dropdown">
-
-    </select>
-
-    <div id="users-todos">
-
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./">Todo</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <a href="./new_todos.html">Add New Todo</a>
+        <select name="user-dropdown" id="user-dropdown"></select>
+        <div id="users-todos"></div>
+    </main>
+    
+    <script src="./scripts/common.js"></script>
+    <script src="./scripts/todos.js"></script>
 </body>
 
 </html>
