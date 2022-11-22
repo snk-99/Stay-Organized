@@ -1,19 +1,8 @@
 
 (() => {
-    const $q = (s) => document.querySelector(s);
     const userDropdown = $q('#user-dropdown');
     const usersTodos = $q("#users-todos")
 
-    function loadUserDropdown(users) {
-        userDropdown.innerText = ""
-        let option = new Option("Choose A User...");
-        userDropdown.appendChild(option);
-
-        users.forEach(user => {
-            let option = new Option(user.name);
-            userDropdown.appendChild(option);
-        });
-    }
 
     function getUsers() {
         return fetch('http://localhost:8083/api/users')
@@ -23,27 +12,38 @@
             })
     }
 
-    function loadtodos() {
-        return fetch('http://localhost:8083/api/todos/')
+    function loadUserDropdown(users) {
+        userDropdown.innerText = ""
+        let option = new Option("Choose A User...");
+        userDropdown.appendChild(option);
+
+        users.forEach(user => {
+            let option = new Option(user.name, user.id);
+            userDropdown.appendChild(option);
+            console.log(option)
+        });
+    }
+
+    function loadtodos(userId) {
+        return fetch('http://localhost:8083/api/todos/byuser/' + userId)
             .then(response => response.json())
             .then(todos => {
-                todos.forEach(todo => {
-                    usersTodos.innerText = todo.description;
-                    console.log(todo)
-                });
+                fillTodosList(todos)
             })
     }
 
-    function getUserId() {
-        const params = new URLSearchParams(location.search);
-        return params.get("id");
+    function fillTodosList(todos) {
+        console.log(todos)
     }
 
-    const id = getUserId();
-    console.log(id);
+    function userSelectedId() {
+        const userId = userDropdown.value
+        loadtodos(userId)
+    }
+
 
     window.onload = () => {
-        loadtodos()
         getUsers()
+        userDropdown.onchange = userSelectedId;
     }
 })()
